@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenhe!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", (e) => {
+            let segurando = false;
+
+            function down_and_up() {
+                if (segurando) {
+                    segurando = false
+                } else {
+                    segurando = true;
+                }
+            }
+
+            function draw_draw(e, ctx) {
+                if (!segurando) {
+                    return
+                }
+                ctx.beginPath();
+                ctx.moveTo(e.clientX, e.clientY);
+                ctx.lineTo(100,75);
+                ctx.stroke();
+            }
+
+
+            
+            let canvas = document.getElementById("canvas");
+            canvas.width = window.innerWidth-10;
+            canvas.height = window.innerHeight-10;
+            
+            if (canvas.getContext) {
+                let ctx = canvas.getContext('2d');
+
+                canvas.addEventListener("mousedown", (e) => {
+                     down_and_up();
+                });
+                canvas.addEventListener("mouseup", (e) => {
+                     down_and_up();
+                });
+                canvas.addEventListener("mousemove", (e) => {
+                     draw_draw(e, ctx);
+                });
+            }
+            
+        })
+    </script>
+</body>
+</html>
